@@ -14,9 +14,7 @@ import cv2
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"]="TRUE"
 board = Controller()
-def cooldown(cooldown_bool,wait):
-    time.sleep(wait)
-    cooldown_bool[0] = True
+
 
 MONITOR_WIDTH = 1920#game res
 MONITOR_HEIGHT = 1080#game res
@@ -24,8 +22,7 @@ MONITOR_SCALE = 5#how much the screen shot is downsized by eg. 5 would be one fi
 region = (int(MONITOR_WIDTH/2-MONITOR_WIDTH/MONITOR_SCALE/2),int(MONITOR_HEIGHT/2-MONITOR_HEIGHT/MONITOR_SCALE/2),int(MONITOR_WIDTH/2+MONITOR_WIDTH/MONITOR_SCALE/2),int(MONITOR_HEIGHT/2+MONITOR_HEIGHT/MONITOR_SCALE/2))
 x,y,width,height = region
 screenshot_center = [int((width-x)/2),int((height-y)/2)]
-triggerbot = False
-triggerbot_toggle = [True]
+
 model = torch.hub.load('C:/Users/vmoda/OneDrive/Desktop/val/yolov5', 'custom', path= 'C:/Users/vmoda/OneDrive/Desktop/val/best.pt',source='local')
 model.conf = 0.40
 model.maxdet = 6
@@ -90,6 +87,6 @@ with mss.mss() as stc:
             if screenshot_center[0] in range(int(xmin),int(xmax)) and screenshot_center[1] in range(int(ymin),int(ymax)):
                 board.press('h')
                 
-                board.release('h')
+                board.release('h')  # h is binded to alt fire 
                 time.sleep(.5)
         
